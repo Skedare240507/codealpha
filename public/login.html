@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register | LuxeShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo" onclick="location.href='/'">LuxeShop</div>
+    </nav>
+
+    <div class="auth-container">
+        <div id="login-form-box">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">Welcome Back</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p style="margin-top: 2rem; color: var(--text-muted); text-align: center;">
+                Don't have an account? <a href="#register" onclick="showRegister()" style="color: var(--primary); text-decoration: none;">Register</a>
+            </p>
+        </div>
+
+        <div id="register-form-box" style="display: none;">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">Create Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="reg-username" required placeholder="johndoe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p style="margin-top: 2rem; color: var(--text-muted); text-align: center;">
+                Already have an account? <a href="#login" onclick="showLogin()" style="color: var(--primary); text-decoration: none;">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function showRegister() {
+            document.getElementById('login-form-box').style.display = 'none';
+            document.getElementById('register-form-box').style.display = 'block';
+        }
+        function showLogin() {
+            document.getElementById('login-form-box').style.display = 'block';
+            document.getElementById('register-form-box').style.display = 'none';
+        }
+
+        if (window.location.hash === '#register') showRegister();
+
+        // Register Logic
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            const res = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                alert('Registration successful! Please login.');
+                showLogin();
+            } else {
+                alert(data.message);
+            }
+        });
+
+        // Login Logic
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                alert(data.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeShop | Premium Electronics</title>
+    <meta name="description" content="Discover curated high-end electronics with seamless shopping experience.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo" onclick="location.href='/'">LuxeShop</div>
+        <div class="nav-links">
+            <a href="/">Products</a>
+            <div id="auth-links">
+                <a href="/login.html">Login</a>
+                <a href="/login.html#register" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Register</a>
+            </div>
+            <div class="cart-icon" onclick="toggleCart()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Elevate Your Tech</h1>
+        <p>Curated collection of ultra-premium electronics designed for the modern professional.</p>
+        <div class="search-container" style="max-width: 600px; margin: 0 auto; display: flex; gap: 1rem;">
+            <input type="text" id="search-input" placeholder="Search products..." class="form-group" style="margin-bottom: 0; flex: 1; padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white;">
+            <select id="category-filter" class="form-group" style="margin-bottom: 0; width: auto; padding: 0 1rem; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; cursor: pointer;">
+                <option value="all">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Home">Home</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">New Arrivals</h2>
+        <div class="product-grid" id="product-grid">
+            <!-- Products will be injected here -->
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <img id="modal-image" src="" alt="" class="modal-image">
+            <div class="modal-details">
+                <h2 id="modal-name" class="product-name" style="font-size: 2rem;"></h2>
+                <p id="modal-category" class="product-category"></p>
+                <p id="modal-description" style="color: var(--text-muted); margin: 1.5rem 0; flex: 1;"></p>
+                <p id="modal-price" class="product-price" style="font-size: 1.8rem;"></p>
+                <button class="btn" onclick="addToCartFromModal()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order History Modal -->
+    <div id="orders-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px; flex-direction: column;">
+            <div class="modal-details">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="font-size: 2rem;">Order History</h2>
+                    <span class="close-modal" onclick="closeOrdersModal()" style="position: static;">&times;</span>
+                </div>
+                <div id="orders-list" style="overflow-y: auto; max-height: 60vh;">
+                    <!-- Orders will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <span class="close-modal" onclick="toggleCart()" style="position: static;">&times;</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be injected here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button class="btn" onclick="checkout()">Checkout Now</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
